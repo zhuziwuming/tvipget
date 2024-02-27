@@ -2,7 +2,7 @@ name: itvlist
 
 on:
   schedule:
-    - cron: '38 4,7,18 * * *'
+    - cron: '0 4 * * *'
 
 jobs:
   build:
@@ -20,8 +20,18 @@ jobs:
       - name: Install dependencies
         run: pip install selenium requests futures eventlet
 
+      - name: Run itv
+        run: python ${{ github.workspace }}/itv.py
+
       - name: Run cctv
         run: python ${{ github.workspace }}/cctv.py
+        
+      - name: Run weishi
+        run: python ${{ github.workspace }}/weishi.py
+        
+      - name: Run qita
+        run: python ${{ github.workspace }}/qita.py
+        
       - name: 提交更改
         run: |
           git config --local user.email "ssili@126.com"
